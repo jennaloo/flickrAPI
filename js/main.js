@@ -20,7 +20,7 @@ function searchFor(pageSet) {
                 console.log(data);
                 //instruction for url format for flickr is: //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
 
-//-------using API to get Images--------------//
+                //-------using API to get Images--------------//
                 for (i = pageSet; i < pageSet + 10; i++) {
                     //get the pieces for the image url.
                     var farm = data.photos.photo[i].farm;
@@ -33,7 +33,7 @@ function searchFor(pageSet) {
                     console.log(imgURL);
 
                     //get,create div, fill with url, style and append.
-                    
+
                     //get,create
                     var imagesGoHere = document.getElementById('imagesGoHere');
                     var photoDiv = document.createElement('div');
@@ -41,27 +41,40 @@ function searchFor(pageSet) {
                     photoDiv.className = "col-md-6 col-12 singlePhoto";
                     photoDiv.style.cssText = "border: 30px solid white; background-repeat: no-repeat; background-size: cover; height: 500px;padding:0px;";
                     photoDiv.style.backgroundImage = "url(" + imgURL + ")";
-                   
-                   //apend
+
+                    //apend
                     imagesGoHere.appendChild(photoDiv);
-                    
-                    
-                    
-
-//-----------Set up Pagination------------------//
-                    //reveal pagination on search
-                    var pagination = document.getElementById('pagination');
-                    pagination.className = "show";
-//------------End Pagination------------------//
 
 
-                    
-                    
-//------------modal click event listener----------------//
-        photoDiv.addEventListener('onclick',showModal(imgURL));
-//------------------------------------------------//
-                    
                 }
+
+                //-----------Set up Pagination------//
+                //reveal pagination on search
+                var pagination = document.getElementById('pagination');
+                pagination.className = "show";
+                //------------End Pagination---------//
+
+
+                //--modal click event listener--//
+                var showModal = function showModal(theImage) {
+                    //create modal
+                    //empty previous contents
+                    var modal = document.getElementById('modal');
+                    modal.innerHTML = "";
+                    //create closebutton
+                    var closeButton = document.createElement('span');
+                    closeButton.innerHTML = "<i class='fas fa-times'></i>";
+                    closeButton.className = "closeBtn";
+                    //append closebutton to modal
+                    modal.appendChild(closeButton);
+                    //style&fill modal
+                    modal.style.cssText = "display:block";
+                    modal.setAttribute('onclick', 'closefunc()');
+                    modal.innerHTML = "<img src=" + theImage + ">";
+                }
+
+                photoDiv.addEventListener('click', showModal(imgURL));
+
             },
             type: "get",
         })
@@ -81,26 +94,8 @@ document.addEventListener('keypress',
     });
 
 
-
-//function that on click, presents a full screen div with larger photo and transluscent border/background.
-function showModal(theImage){
-    //create modal
-    //empty previous contents
-        var modal = document.getElementById('modal');
-        modal.innerHTML="";
-        var closeButton = document.createElement('span');
-        closeButton.innerHTML="<i class='fas fa-times'></i>";
-        closeButton.className="closeBtn";
-        modal.appendChild(closeButton);
-        modal.style.cssText="display:block";   modal.setAttribute('onclick','closefunc()');
-    modal.innerHTML="<img src="+theImage+">";
+//click to close modal (anywhere)
+function closefunc() {
+    var modal = document.getElementById('modal');
+    modal.style.cssText = "display:none";
 }
-
-function closefunc(){
-        var modal = document.getElementById('modal');
-        modal.style.cssText="display:none";
-}
-
-
-
-//to fix: why is photodiv, set to onclick, running when i search?
