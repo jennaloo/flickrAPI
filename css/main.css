@@ -1,0 +1,65 @@
+.searchBar {
+    height: 100px;
+}
+
+input::placeholder {
+    font-style: italic;
+    color: lightgrey;
+}
+
+.pagination {
+    display: none;
+}
+
+.show {
+    display: block;
+    margin: 0 auto;
+}
+
+.show a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+
+
+.show a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+body {
+    background-image: url('../img/photographer.jpg');
+    background-repeat: no-repeat;
+    height: 100vh;
+    background-size: cover;
+}
+
+.searchBtn {
+    background-color: #FB5014;
+    color: white;
+}
+
+#modal{
+    display:none;
+    height:100vh;
+    width:100vw;
+    position:fixed;
+    background-color:black;
+    opacity:0.8;
+    z-index:2;
+}
+
+/*add to modal*/
+.closeBtn {
+    float: right;
+    padding: 10px;
+    color: white;
+    font-size: 25px;
+}
+
+.closeBtn:hover {
+    color: #fb5014;
+    cursor: pointer;
+}
