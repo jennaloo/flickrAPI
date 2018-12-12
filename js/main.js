@@ -4,20 +4,19 @@ function searchFor(pageSet) {
     var yourInterest = document.getElementById('search').value;
     console.log(yourInterest);
     if (yourInterest !== "") {
-        document.body.style.cssText = "background-image:none;"
+        document.body.style = "background-image:none;";
     }
 
     if (yourInterest !== "") {
 
         var photoDiv = document.getElementById("imagesGoHere").innerHTML = "";
 
-        var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=f4cba17fae1e58d710af7c5efe9129b3&tags=" + yourInterest + "&safe_search=1&per_page=50";
+        var url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=f4cba17fae1e58d710af7c5efe9129b3&tags=" + yourInterest + "&safe_search=1&per_page=50";
 
         $.ajax({
             url: url + "&format=json&jsoncallback=?",
             dataType: "json",
             success: function (data) {
-                console.log(data);
                 //instruction for url format for flickr is: //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
 
                 //-------using API to get Images--------------//
@@ -39,12 +38,16 @@ function searchFor(pageSet) {
                     var photoDiv = document.createElement('div');
                     //style
                     photoDiv.className = "col-md-6 col-12 singlePhoto";
-                    photoDiv.style.cssText = "border: 30px solid white; background-repeat: no-repeat; background-size: cover; height: 500px;padding:0px;";
+                    photoDiv.style = "border: 30px solid white; background-repeat: no-repeat; background-size: cover; height: 500px;padding:0px;";
                     photoDiv.style.backgroundImage = "url(" + imgURL + ")";
+                    photoDiv.setAttribute('data-value', imgURL);
 
                     //apend
                     imagesGoHere.appendChild(photoDiv);
 
+                    photoDiv.addEventListener('click', function (e) {
+                        return showModal(e.target.attributes["data-value"].value)
+                    })
 
                 }
 
@@ -57,29 +60,31 @@ function searchFor(pageSet) {
 
                 //--modal click event listener--//
                 var showModal = function showModal(theImage) {
+                    document.body.style = "background-image:none;"
                     //create modal
                     //empty previous contents
                     var modal = document.getElementById('modal');
                     modal.innerHTML = "";
-                    //create closebutton
+                    //create & append closebutton
                     var closeButton = document.createElement('span');
                     closeButton.innerHTML = "<i class='fas fa-times'></i>";
                     closeButton.className = "closeBtn";
-                    //append closebutton to modal
                     modal.appendChild(closeButton);
                     //style&fill modal
-                    modal.style.cssText = "display:block";
+                    modal.style = "display:block";
                     modal.setAttribute('onclick', 'closefunc()');
                     modal.innerHTML = "<img src=" + theImage + ">";
+                    modal.firstElementChild.style = "display:block;margin-left:auto;margin-right:auto;width:auto; height:100%;";
                 }
 
-                photoDiv.addEventListener('click', showModal(imgURL));
+
 
             },
             type: "get",
         })
     } else {
         alert('please enter search criteria');
+        oh
     }
 }
 
@@ -97,5 +102,5 @@ document.addEventListener('keypress',
 //click to close modal (anywhere)
 function closefunc() {
     var modal = document.getElementById('modal');
-    modal.style.cssText = "display:none";
+    modal.style = "display:none";
 }
