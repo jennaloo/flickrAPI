@@ -55,8 +55,9 @@ body {
 .closeBtn {
     float: right;
     padding: 10px;
-    color: white;
+    color: black;
     font-size: 25px;
+    z-index: 10;
 }
 
 .closeBtn:hover {

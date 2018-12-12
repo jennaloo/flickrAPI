@@ -65,11 +65,6 @@ function searchFor(pageSet) {
                     //empty previous contents
                     var modal = document.getElementById('modal');
                     modal.innerHTML = "";
-                    //create & append closebutton
-                    var closeButton = document.createElement('span');
-                    closeButton.innerHTML = "<i class='fas fa-times'></i>";
-                    closeButton.className = "closeBtn";
-                    modal.appendChild(closeButton);
                     //style&fill modal
                     modal.style = "display:block";
                     modal.setAttribute('onclick', 'closefunc()');
